@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DIRECTORY="${HOME}/.local/bin"
+
+if echo "$PATH" | grep -q "$DIRECTORY"; then
+    cp ./mbe_install "${DIRECTORY}"
+else
+    DIRECTORY="${HOME}/bin"
+    if echo "$PATH" | grep -q "$DIRECTORY"; then
+        cp ./mbe_install "${DIRECTORY}"
+    else
+        echo "Can find a personal bin directory. Copy mbe_install somewhere in the path."
+        exit 1
+    fi
+fi
