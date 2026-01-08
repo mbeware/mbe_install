@@ -35,7 +35,7 @@ if [ $# -eq 0 ]; then
     echo -e "\033[1;33m${script_name} nano <file to backup,edit, diff, and log>\033[0m"
     echo -e "\033[1;33m${script_name} info <comments to log>\033[0m"
     echo
-    echo "the commands are loggeds in an history file"
+    echo "the commands are loggeds in a logfile/history file"
     echo -e "history file location : \033[1;33m${HISTORY_FILE}\033[0m"
     echo
     echo "special commands : "
@@ -43,11 +43,14 @@ if [ $# -eq 0 ]; then
     echo "            lauch nano"
     echo "            diff the backup file and the new version"
     echo "            save the differences in a patch file"
+    echo "            add the command to the logfile/history"
     echo
     echo "    backup location is the same as original file"
     echo -e "    patch file location : \033[1;33m${PATCH_DIR}\033[0m"
     echo
-    echo -e "    \033[4minfo\033[0m -> create a comment entry in the logfile"
+    echo -e "    \033[4minfo\033[0m -> create a comment entry in the logfile/history"
+    echo
+    echo -e "    \033[4mshow\033[0m -> display (with less) the logfile/history"
     echo
     exit 0
 fi	
@@ -85,6 +88,9 @@ if [[ "${command_name}" == "info" ]]; then
     original_cmd[$cmd_start]="# ${original_cmd[$cmd_start]}:"
     info_ind="#"
     exit_code=0
+elif [[ "${command_name}" == "show" ]]; then
+    less "$HISTORY_FILE"
+    exit 0
 else
     # ---- execute command ----
     info_ind=""
